@@ -1,47 +1,32 @@
 // Fichier JavaScript pour la page du présentateur, gérant la création de la partie, la génération du code et du QR code, ainsi que les interactions avec les joueurs.
 
-const socket = io.connect('http://' + document.domain + ':' + location.port);
+const socket = io();
 
-// Fonction pour créer une nouvelle partie
-function createGame() {
-    const gameName = document.getElementById('game-name').value;
-    socket.emit('create_game', { name: gameName });
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const genBtn = document.getElementById('generate-code');
+    const startBtn = document.getElementById('start-game');
+    const codeInput = document.getElementById('game-code');
+    const nameInput = document.getElementById('game-name');
 
-// Écouteur d'événements pour la création de la partie
-socket.on('game_created', function(data) {
-    document.getElementById('game-code').innerText = data.code;
-    generateQRCode(data.code);
-});
-
-// Fonction pour générer un QR code
-function generateQRCode(code) {
-    const qrCodeContainer = document.getElementById('qr-code');
-    qrCodeContainer.innerHTML = ''; // Effacer le contenu précédent
-    const qrCode = new QRCode(qrCodeContainer, {
-        text: code,
-        width: 128,
-        height: 128,
+    genBtn.addEventListener('click', () => {
+        socket.emit('request_code');
     });
-}
 
-// Fonction pour démarrer la partie
-function startGame() {
-    socket.emit('start_game');
-}
+    startBtn.addEventListener('click', () => {
+        const payload = { code: codeInput.value.trim(), name: nameInput.value.trim() };
+        socket.emit('presenter_setup', payload);
+    });
 
-// Écouteur d'événements pour le démarrage de la partie
-socket.on('game_started', function() {
-    alert('La partie a commencé !');
-});
+    socket.on('tv_code', (data) => {
+        codeInput.value = data.code;
+    });
 
-// Fonction pour envoyer une question aux joueurs
-function sendQuestion() {
-    const question = document.getElementById('question').value;
-    socket.emit('send_question', { question: question });
-}
-
-// Écouteur d'événements pour la réception de la question
-socket.on('question_sent', function(data) {
-    document.getElementById('current-question').innerText = data.question;
+    socket.on('presenter_ack', (data) => {
+        if (data.status === 'ok') {
+            alert(`Partie "${data.name}" configurée (code ${data.code})`);
+            // optionally generate QR using an external lib
+        } else {
+            alert('Erreur: ' + data.message);
+        }
+    });
 });

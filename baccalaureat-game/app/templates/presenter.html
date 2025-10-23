@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page du Présentateur</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/presenter.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
     <script src="{{ url_for('static', filename='js/presenter.js') }}" defer></script>
 </head>
 <body>
@@ -14,9 +15,12 @@
     <main>
         <section id="game-setup">
             <h2>Configurer la Partie</h2>
+            <label for="game-name">Nom de la Partie:</label>
+            <input type="text" id="game-name" placeholder="Entrez le nom de la partie">
             <label for="game-code">Code de la Partie:</label>
-            <input type="text" id="game-code" placeholder="Entrez le code ici">
-            <button id="start-game">Démarrer la Partie</button>
+            <input type="text" id="game-code" placeholder="Entrez le code ici (ou cliquez pour générer)">
+            <button id="generate-code">Générer un code</button>
+            <button id="start-game">Valider la configuration</button>
         </section>
         <section id="qr-code">
             <h2>QR Code pour les Joueurs</h2>
