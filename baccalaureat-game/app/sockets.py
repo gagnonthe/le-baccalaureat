@@ -33,6 +33,20 @@ def handle_register_tv():
     emit('registered_tv', {'status': 'ok'})
 
 
+@socketio.on('register_presenter')
+def handle_register_presenter():
+    # Put this client in the 'presenters' room so they can receive tv codes
+    join_room('presenters')
+    emit('registered_presenter', {'status': 'ok'})
+    # Send any currently available codes to this presenter so they don't miss them
+    try:
+        available = list(games.keys())
+    except Exception:
+        available = []
+    if available:
+        emit('presenter_codes', {'codes': available})
+
+
 @socketio.on('request_code')
 def handle_request_code():
     # Generate a unique code and send it back to the requester (TV)
@@ -42,7 +56,10 @@ def handle_request_code():
         code = generate_code()
     games[code] = {'name': None, 'players': []}
     # Send code to the requesting client only
+    print(f"[sockets] generated code {code} for sid={request.sid}")
+    # Send tv_code to requesting client (TV) and notify all presenters
     emit('tv_code', {'code': code}, to=request.sid)
+    emit('tv_code', {'code': code}, room='presenters')
 
 
 @socketio.on('presenter_setup')
@@ -51,9 +68,11 @@ def handle_presenter_setup(data):
     code = data.get('code')
     name = data.get('name')
     if not code or code not in games:
+        print(f"[sockets] presenter_setup with invalid code: {code}")
         emit('presenter_ack', {'status': 'error', 'message': 'Code invalide'})
         return
     games[code]['name'] = name
     # Notify TVs in the 'tv' room that a game has been set up
+    print(f"[sockets] presenter_setup: code={code} name={name}")
     emit('game_setup', {'code': code, 'name': name}, room='tv')
     emit('presenter_ack', {'status': 'ok', 'code': code, 'name': name})
