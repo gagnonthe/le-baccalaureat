@@ -16,5 +16,6 @@ export PYTHONPATH="$ROOT_DIR/baccalaureat-game"
 echo "Starting Flask-SocketIO server on 0.0.0.0:5000"
 python - <<'PY'
 from app import socketio, app
-socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+# Disable the reloader so the process stays alive when launched from a script
+socketio.run(app, host='0.0.0.0', port=5000, debug=True, use_reloader=False)
 PY

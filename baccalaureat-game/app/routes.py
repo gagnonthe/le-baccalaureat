@@ -3,8 +3,8 @@ from . import app
 
 @app.route('/')
 def home():
-    # Return presenter template directly so tests expecting 200 pass.
-    return render_template('presenter.html')
+    # Render a simple index page with links to presenter, tv and player
+    return render_template('index.html')
 
 @app.route('/presenter')
 def presenter():
