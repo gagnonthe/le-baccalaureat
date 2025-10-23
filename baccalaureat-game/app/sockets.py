@@ -30,6 +30,7 @@ def handle_disconnect():
 def handle_register_tv():
     # Put this client in the 'tv' room
     join_room('tv')
+    print(f"[sockets] TV registered sid={request.sid}")
     emit('registered_tv', {'status': 'ok'})
 
 
@@ -37,6 +38,7 @@ def handle_register_tv():
 def handle_register_presenter():
     # Put this client in the 'presenters' room so they can receive tv codes
     join_room('presenters')
+    print(f"[sockets] Presenter registered sid={request.sid}")
     emit('registered_presenter', {'status': 'ok'})
     # Send any currently available codes to this presenter so they don't miss them
     try:

@@ -49,8 +49,9 @@ def force_code():
             code = sockets.generate_code()
         sockets.games[code] = {'name': None, 'players': []}
         print(f"[routes] forced code {code}")
-        # Notify connected presenters
+        # Notify connected presenters and TVs
         socketio_app.emit('tv_code', {'code': code}, room='presenters')
+        socketio_app.emit('tv_code', {'code': code}, room='tv')
         return jsonify({'code': code})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -63,6 +64,8 @@ def broadcast_codes():
         codes = list(sockets.games.keys())
         for c in codes:
             socketio_app.emit('tv_code', {'code': c}, room='presenters')
+            socketio_app.emit('tv_code', {'code': c}, room='tv')
+        print(f"[routes] broadcasted codes: {codes}")
         return jsonify({'broadcasted': codes})
     except Exception as e:
         return jsonify({'error': str(e)}), 500

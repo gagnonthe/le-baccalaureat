@@ -45,6 +45,13 @@ socket.on('game_setup', (data) => {
     document.getElementById('status').textContent = `Partie: ${data.name} (code ${data.code})`;
 });
 
+// Also listen for a direct tv_code event (sent when a code is generated)
+socket.on('tv_code', (data) => {
+    console.log('tv received tv_code', data);
+    document.getElementById('game-code-display').textContent = data.code;
+    document.getElementById('status').textContent = 'Code reçu: ' + data.code;
+});
+
 socket.on('update_scores', (data) => {
     updateScores(data.scores);
 });
