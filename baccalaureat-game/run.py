@@ -1,7 +1,15 @@
+import os
+from pathlib import Path
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 
-app = Flask(__name__)
+# Ensure Flask knows the correct templates/static folders when running
+# run.py from the repository root.
+BASE_DIR = Path(__file__).resolve().parent
+TEMPLATES_DIR = str(BASE_DIR / 'app' / 'templates')
+STATIC_DIR = str(BASE_DIR / 'app' / 'static')
+
+app = Flask(__name__, template_folder=TEMPLATES_DIR, static_folder=STATIC_DIR)
 socketio = SocketIO(app)
 
 @app.route('/')
