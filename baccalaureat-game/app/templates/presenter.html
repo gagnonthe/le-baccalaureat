@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page du Présentateur</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/presenter.css') }}">
+    <script src="{{ url_for('static', filename='js/presenter.js') }}" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur la page du Présentateur</h1>
+    </header>
+    <main>
+        <section id="game-setup">
+            <h2>Configurer la Partie</h2>
+            <label for="game-code">Code de la Partie:</label>
+            <input type="text" id="game-code" placeholder="Entrez le code ici">
+            <button id="start-game">Démarrer la Partie</button>
+        </section>
+        <section id="qr-code">
+            <h2>QR Code pour les Joueurs</h2>
+            <div id="qr-code-display"></div>
+        </section>
+        <section id="player-interactions">
+            <h2>Interactions avec les Joueurs</h2>
+            <div id="player-list"></div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Baccalauréat Game</p>
+    </footer>
+</body>
+</html>

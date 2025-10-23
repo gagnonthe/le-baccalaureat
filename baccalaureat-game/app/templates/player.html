@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
+    <title>Jeu Baccalauréat - Joueur</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Rejoindre la Partie</h1>
+        <form id="join-form">
+            <label for="game-code">Code de la Partie:</label>
+            <input type="text" id="game-code" name="game-code" required>
+            <button type="submit">Rejoindre</button>
+        </form>
+        <div id="response-message"></div>
+        
+        <div id="game-area" style="display:none;">
+            <h2>Soumettre votre Réponse</h2>
+            <form id="answer-form">
+                <label for="answer">Votre Réponse:</label>
+                <input type="text" id="answer" name="answer" required>
+                <button type="submit">Soumettre</button>
+            </form>
+            <div id="score-display"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+</body>
+</html>

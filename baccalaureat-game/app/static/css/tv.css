@@ -1,0 +1,51 @@
+body {
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.score {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    font-size: 24px;
+}
+
+.current-letter {
+    font-size: 48px;
+    font-weight: bold;
+    color: #4CAF50;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.information {
+    text-align: center;
+    margin: 20px;
+    font-size: 18px;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

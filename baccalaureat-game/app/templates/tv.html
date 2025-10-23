@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/tv.css') }}">
+    <title>Présentation du Baccalauréat</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Présentation du Baccalauréat</h1>
+        </header>
+        <main>
+            <section id="game-info">
+                <h2>Informations de la Partie</h2>
+                <div id="current-letter">Lettre actuelle : <span id="letter"></span></div>
+                <div id="scoreboard">
+                    <h3>Scores</h3>
+                    <ul id="scores-list"></ul>
+                </div>
+            </section>
+            <section id="controls">
+                <button id="next-letter">Prochaine Lettre</button>
+                <button id="end-game">Terminer la Partie</button>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/tv.js') }}"></script>
+</body>
+</html>
